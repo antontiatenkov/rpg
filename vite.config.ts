@@ -12,8 +12,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'RPG Routine - Геймификация Задач',
-        short_name: 'RPG Routine',
+        name: 'Reach Personal Goals',
+        short_name: 'ReachGoals',
         description: 'Геймификация ежедневных задач, привычек и наград',
         theme_color: '#4f46e5',
         background_color: '#0f172a',

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useGameStore } from '../stores/gameStore'
-import { Trophy, Coins, Sparkles, Check } from '@lucide/vue'
+import { Coins, Check } from '@lucide/vue'
 
 const store = useGameStore()
 </script>
@@ -8,54 +8,41 @@ const store = useGameStore()
 <template>
   <div 
     v-if="store.levelUpModal.show"
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fade-in"
   >
-    <div class="relative w-full max-w-sm overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-indigo-500/40 rounded-3xl p-6 text-center shadow-2xl shadow-indigo-500/20">
-      <!-- Glow effect -->
-      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-indigo-500/30 rounded-full blur-3xl pointer-events-none"></div>
-
-      <!-- Icon & Level -->
-      <div class="relative mx-auto mb-4 w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-300 p-0.5 shadow-xl shadow-amber-500/30">
-        <div class="w-full h-full bg-slate-900 rounded-[14px] flex flex-col items-center justify-center">
-          <Trophy class="w-8 h-8 text-amber-400 mb-0.5" />
-          <span class="text-xs font-black text-amber-300 uppercase tracking-wider">Уровень</span>
-          <span class="text-lg font-black text-white leading-none">{{ store.levelUpModal.newLevel }}</span>
-        </div>
+    <div class="relative w-full max-w-sm bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-7 text-center shadow-xl">
+      <!-- Minimal Level Badge -->
+      <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex flex-col items-center justify-center">
+        <span class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Уровень</span>
+        <span class="text-xl font-bold text-zinc-900 dark:text-zinc-100 leading-none mt-0.5">
+          {{ store.levelUpModal.newLevel }}
+        </span>
       </div>
 
-      <!-- Heading -->
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold mb-2 border border-indigo-500/30">
-        <Sparkles class="w-3.5 h-3.5" />
-        Новый рубеж достигнут!
-      </div>
-      
-      <h3 class="text-2xl font-black text-white tracking-tight mb-1">
-        Поздравляем!
+      <h3 class="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-1">
+        Новый уровень!
       </h3>
       
-      <p class="text-sm text-slate-300 mb-4">
-        Ваше новое звание: 
-        <strong class="text-amber-300 font-bold block text-base mt-0.5">{{ store.levelUpModal.levelTitle }}</strong>
+      <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-5">
+        Новое звание:
+        <span class="font-semibold text-zinc-800 dark:text-zinc-200 block text-sm mt-0.5">
+          {{ store.levelUpModal.levelTitle }}
+        </span>
       </p>
 
-      <!-- Reward Box -->
-      <div class="p-3 mb-6 rounded-2xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-center gap-3">
-        <div class="p-2 rounded-xl bg-amber-500/10 text-amber-400">
-          <Coins class="w-5 h-5" />
-        </div>
-        <div class="text-left">
-          <p class="text-xs text-slate-400">Награда за уровень</p>
-          <p class="text-sm font-bold text-amber-300">+{{ store.levelUpModal.goldBonus }} золота в казну</p>
-        </div>
+      <!-- Bonus Box -->
+      <div class="p-3.5 mb-6 rounded-2xl bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200/60 dark:border-zinc-700/60 flex items-center justify-center gap-2 text-xs font-medium text-zinc-700 dark:text-zinc-300">
+        <Coins class="w-4 h-4 text-amber-500" />
+        <span>+{{ store.levelUpModal.goldBonus }} золота добавлено в казну</span>
       </div>
 
       <!-- Action Button -->
       <button
         @click="store.closeLevelUpModal"
-        class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+        class="w-full py-2.5 px-4 rounded-xl bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium text-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
       >
         <Check class="w-4 h-4" />
-        Продолжить путь
+        Продолжить
       </button>
     </div>
   </div>

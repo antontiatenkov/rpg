@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue'
 import type { Task, TaskType, Difficulty } from '../types'
 import { DIFFICULTY_SETTINGS } from '../types'
-import { X, Calendar, CheckSquare, Sparkles, Coins } from '@lucide/vue'
+import { X } from '@lucide/vue'
 
 const props = defineProps<{
   show: boolean
@@ -62,89 +62,87 @@ function handleSubmit() {
 <template>
   <div 
     v-if="show"
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fade-in"
   >
-    <div class="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl">
+    <div class="relative w-full max-w-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-7 shadow-xl">
       <!-- Header -->
-      <div class="flex items-center justify-between mb-5">
-        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">
-          {{ editTask ? 'Редактировать задачу' : 'Новое испытание' }}
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">
+          {{ editTask ? 'Редактировать задачу' : 'Новая задача' }}
         </h3>
         <button
           @click="emit('close')"
-          class="p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          class="p-1 rounded-lg text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
         >
-          <X class="w-5 h-5" />
+          <X class="w-4 h-4" />
         </button>
       </div>
 
       <form @submit.prevent="handleSubmit" class="space-y-4">
-        <!-- Type Selection (Only when creating) -->
+        <!-- Type Selection -->
         <div v-if="!editTask">
-          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
-            Тип задачи
+          <label class="block text-xs font-medium text-zinc-500 mb-1.5">
+            Тип
           </label>
           <div class="grid grid-cols-2 gap-2">
             <button
               type="button"
               @click="type = 'daily'"
               :class="[
-                'flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer',
+                'py-2 px-3 rounded-xl border text-xs font-medium transition-all cursor-pointer',
                 type === 'daily'
-                  ? 'bg-indigo-600/10 border-indigo-500 text-indigo-400 shadow-sm'
-                  : 'border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                  ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-transparent'
+                  : 'border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'
               ]"
             >
-              <Calendar class="w-4 h-4" />
               Ежедневная рутина
             </button>
             <button
               type="button"
               @click="type = 'quest'"
               :class="[
-                'flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer',
+                'py-2 px-3 rounded-xl border text-xs font-medium transition-all cursor-pointer',
                 type === 'quest'
-                  ? 'bg-indigo-600/10 border-indigo-500 text-indigo-400 shadow-sm'
-                  : 'border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                  ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-transparent'
+                  : 'border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'
               ]"
             >
-              <CheckSquare class="w-4 h-4" />
               Разовый квест
             </button>
           </div>
         </div>
 
-        <!-- Title Input -->
+        <!-- Title -->
         <div>
-          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
-            Название задачи <span class="text-rose-500">*</span>
+          <label class="block text-xs font-medium text-zinc-500 mb-1.5">
+            Название
           </label>
           <input
             v-model="title"
             type="text"
             required
-            placeholder="Например: Утренняя пробежка 20 минут"
-            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+            placeholder="Например: Утренняя зарядка 15 мин"
+            class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-1 focus:ring-zinc-400 dark:focus:ring-zinc-600 transition-all"
           />
         </div>
 
-        <!-- Description Input -->
+        <!-- Description -->
         <div>
-          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
-            Описание (необязательно)
+          <label class="block text-xs font-medium text-zinc-500 mb-1.5">
+            Описание
           </label>
           <textarea
             v-model="description"
             rows="2"
-            placeholder="Детали или подсказки для выполнения..."
-            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all resize-none"
+            placeholder="Дополнительные детали..."
+            class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-1 focus:ring-zinc-400 dark:focus:ring-zinc-600 transition-all resize-none"
           ></textarea>
         </div>
 
         <!-- Difficulty Selection -->
         <div>
-          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
-            Сложность и награда
+          <label class="block text-xs font-medium text-zinc-500 mb-1.5">
+            Сложность
           </label>
           <div class="grid grid-cols-3 gap-2">
             <button
@@ -155,20 +153,15 @@ function handleSubmit() {
               :class="[
                 'p-2.5 rounded-xl border text-center transition-all cursor-pointer',
                 difficulty === key
-                  ? 'border-indigo-500 bg-indigo-500/10 shadow-sm'
-                  : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                  ? 'border-zinc-900 bg-zinc-50 dark:border-zinc-100 dark:bg-zinc-800'
+                  : 'border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'
               ]"
             >
-              <div class="text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">
+              <div class="text-xs font-medium text-zinc-900 dark:text-zinc-100 mb-0.5">
                 {{ config.label }}
               </div>
-              <div class="text-[11px] text-indigo-400 font-semibold flex items-center justify-center gap-0.5">
-                <Sparkles class="w-3 h-3" />
-                +{{ config.xp }}
-              </div>
-              <div class="text-[11px] text-amber-400 font-semibold flex items-center justify-center gap-0.5">
-                <Coins class="w-3 h-3" />
-                +{{ config.gold }}
+              <div class="text-[11px] text-zinc-400">
+                +{{ config.xp }} XP · {{ config.gold }} 🪙
               </div>
             </button>
           </div>
@@ -179,14 +172,14 @@ function handleSubmit() {
           <button
             type="button"
             @click="emit('close')"
-            class="flex-1 py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            class="flex-1 py-2.5 px-4 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
           >
             Отмена
           </button>
           <button
             type="submit"
             :disabled="!title.trim()"
-            class="flex-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-sm font-semibold shadow-md shadow-indigo-600/30 transition-all"
+            class="flex-1 py-2.5 px-4 rounded-xl bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-40 text-white dark:text-zinc-900 text-sm font-medium transition-all shadow-xs"
           >
             {{ editTask ? 'Сохранить' : 'Создать' }}
           </button>

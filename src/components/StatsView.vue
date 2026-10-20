@@ -2,15 +2,6 @@
 import { computed } from 'vue'
 import { useGameStore } from '../stores/gameStore'
 import { getLogicalDate } from '../utils/date'
-import { 
-  Shield, 
-  Sparkles, 
-  Calendar, 
-  CheckSquare, 
-  Flame, 
-  Gift, 
-  TrendingUp
-} from '@lucide/vue'
 
 const store = useGameStore()
 
@@ -51,139 +42,97 @@ const maxXp = computed(() => {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-8">
     <!-- Header -->
     <div>
-      <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-        <span>Статистика и достижения</span>
+      <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+        Статистика
       </h2>
-      <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-        Обзор вашей продуктивности, набранного опыта и серий привычек
+      <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+        Обзор вашей активности и прогресса
       </p>
     </div>
 
-    <!-- KPI Metric Cards Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+    <!-- Clean Metric Cards Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4">
       <!-- Level Card -->
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div class="flex items-center gap-2 text-indigo-400 mb-2">
-          <Shield class="w-4 h-4" />
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Уровень героя</span>
-        </div>
-        <div class="text-2xl font-black text-slate-900 dark:text-slate-100">
+      <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs">
+        <div class="text-xs text-zinc-400 dark:text-zinc-500 font-medium">Уровень</div>
+        <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mt-1">
           {{ store.level }}
         </div>
-        <p class="text-xs text-indigo-500 dark:text-indigo-400 font-medium truncate mt-0.5">
+        <p class="text-xs text-zinc-500 mt-0.5 truncate">
           {{ store.currentTitle }}
         </p>
       </div>
 
       <!-- Total XP -->
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div class="flex items-center gap-2 text-purple-400 mb-2">
-          <Sparkles class="w-4 h-4" />
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Всего опыта (XP)</span>
-        </div>
-        <div class="text-2xl font-black text-slate-900 dark:text-slate-100">
+      <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs">
+        <div class="text-xs text-zinc-400 dark:text-zinc-500 font-medium">Всего XP</div>
+        <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mt-1">
           {{ store.totalXpEarned.toLocaleString() }}
         </div>
-        <p class="text-xs text-slate-500 mt-0.5">
+        <p class="text-xs text-zinc-500 mt-0.5">
           {{ store.currentXp }} в текущем уровне
         </p>
       </div>
 
       <!-- Longest Streak -->
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div class="flex items-center gap-2 text-orange-400 mb-2">
-          <Flame class="w-4 h-4" />
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Рекорд серии</span>
+      <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs">
+        <div class="text-xs text-zinc-400 dark:text-zinc-500 font-medium">Серия привычек</div>
+        <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mt-1">
+          {{ store.longestDailyStreak }} <span class="text-xs font-normal text-zinc-400">дней</span>
         </div>
-        <div class="text-2xl font-black text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-          <span>{{ store.longestDailyStreak }}</span>
-          <span class="text-xs font-normal text-slate-400">дней</span>
-        </div>
-        <p class="text-xs text-slate-500 mt-0.5">
-          Подряд без пропуска
+        <p class="text-xs text-zinc-500 mt-0.5">
+          Лучший результат
         </p>
       </div>
 
-      <!-- Dailies Completed -->
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div class="flex items-center gap-2 text-emerald-400 mb-2">
-          <Calendar class="w-4 h-4" />
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Рутин выполнено</span>
+      <!-- Total Tasks Done -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs">
+        <div class="text-xs text-zinc-400 dark:text-zinc-500 font-medium">Задач выполнено</div>
+        <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mt-1">
+          {{ store.totalTasksCompleted.toLocaleString() }}
         </div>
-        <div class="text-2xl font-black text-slate-900 dark:text-slate-100">
-          {{ store.totalDailiesCompleted.toLocaleString() }}
-        </div>
-        <p class="text-xs text-slate-500 mt-0.5">
-          Ежедневных повторений
-        </p>
-      </div>
-
-      <!-- Quests Completed -->
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div class="flex items-center gap-2 text-blue-400 mb-2">
-          <CheckSquare class="w-4 h-4" />
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Квестов закрыто</span>
-        </div>
-        <div class="text-2xl font-black text-slate-900 dark:text-slate-100">
-          {{ store.totalQuestsCompleted.toLocaleString() }}
-        </div>
-        <p class="text-xs text-slate-500 mt-0.5">
-          Разовых задач
-        </p>
-      </div>
-
-      <!-- Rewards Claimed -->
-      <div class="p-4 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div class="flex items-center gap-2 text-amber-400 mb-2">
-          <Gift class="w-4 h-4" />
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Куплено наград</span>
-        </div>
-        <div class="text-2xl font-black text-slate-900 dark:text-slate-100">
-          {{ store.redeemedHistory.length }}
-        </div>
-        <p class="text-xs text-slate-500 mt-0.5">
-          В магазине наград
+        <p class="text-xs text-zinc-500 mt-0.5">
+          {{ store.totalDailiesCompleted }} рутин, {{ store.totalQuestsCompleted }} квестов
         </p>
       </div>
     </div>
 
     <!-- Last 7 Days Activity Chart -->
-    <div class="p-5 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm">
-      <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-2">
-          <TrendingUp class="w-4 h-4 text-indigo-400" />
-          <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">
-            Опыт за последние 7 дней
+    <div class="p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+            Опыт за 7 дней
           </h3>
+          <p class="text-xs text-zinc-400 mt-0.5">Динамика набранного опыта по дням</p>
         </div>
-        <span class="text-xs text-slate-400">XP по дням</span>
       </div>
 
       <!-- Chart Bars -->
-      <div class="grid grid-cols-7 gap-2 pt-6 pb-2 items-end min-h-[160px]">
+      <div class="grid grid-cols-7 gap-2.5 sm:gap-4 pt-4 pb-1 items-end min-h-[140px]">
         <div
           v-for="day in last7Days"
           :key="day.dateStr"
           class="flex flex-col items-center gap-2 h-full justify-end group"
         >
-          <!-- Tooltip info -->
-          <div class="text-[10px] font-bold text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">
+          <!-- Tooltip info on hover -->
+          <div class="text-[10px] font-medium text-zinc-500 opacity-0 group-hover:opacity-100 transition-opacity">
             +{{ day.xp }}
           </div>
 
           <!-- Bar -->
-          <div class="w-full bg-slate-100 dark:bg-slate-800/80 rounded-xl overflow-hidden h-28 flex items-end p-0.5">
+          <div class="w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg overflow-hidden h-24 flex items-end">
             <div
-              class="w-full bg-gradient-to-t from-indigo-600 to-purple-500 rounded-lg transition-all duration-500 group-hover:brightness-110"
+              class="w-full bg-zinc-900 dark:bg-zinc-200 rounded-md transition-all duration-300"
               :style="{ height: `${Math.max(4, Math.round((day.xp / maxXp) * 100))}%` }"
             ></div>
           </div>
 
           <!-- Date Label -->
-          <div class="text-[10px] sm:text-xs text-slate-400 text-center font-medium capitalize truncate w-full">
+          <div class="text-[10px] sm:text-xs text-zinc-400 text-center font-medium capitalize truncate w-full">
             {{ day.label }}
           </div>
         </div>

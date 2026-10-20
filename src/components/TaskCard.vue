@@ -6,11 +6,8 @@ import { useGameStore } from '../stores/gameStore'
 import { 
   Check, 
   Flame, 
-  Coins, 
-  Sparkles, 
   Trash2, 
-  Edit3, 
-  CheckCircle2
+  Edit3 
 } from '@lucide/vue'
 
 const props = defineProps<{
@@ -47,10 +44,10 @@ function handleDelete() {
 <template>
   <div 
     :class="[
-      'group relative p-4 rounded-2xl border transition-all duration-200',
+      'group relative p-4 sm:p-5 rounded-2xl border transition-all duration-150',
       isCompleted 
-        ? 'bg-slate-900/40 dark:bg-slate-900/40 border-slate-800/80 opacity-75' 
-        : 'bg-white dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-indigo-500/30'
+        ? 'bg-zinc-50/60 dark:bg-zinc-900/40 border-zinc-200/60 dark:border-zinc-800/40 opacity-70' 
+        : 'bg-white dark:bg-zinc-900 border-zinc-200/80 dark:border-zinc-800 shadow-xs hover:border-zinc-300 dark:hover:border-zinc-700'
     ]"
   >
     <div class="flex items-start gap-3.5">
@@ -58,44 +55,44 @@ function handleDelete() {
       <button
         @click="handleComplete"
         :disabled="isCompleted"
-        :title="isCompleted ? 'Задача уже выполнена' : 'Отметить выполнение и получить награду'"
+        :title="isCompleted ? 'Задача выполнена' : 'Отметить выполнение'"
         :class="[
-          'mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center shrink-0 border transition-all duration-200',
+          'mt-0.5 w-6 h-6 rounded-full flex items-center justify-center shrink-0 border transition-all cursor-pointer',
           isCompleted 
-            ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400 cursor-default' 
-            : 'border-slate-300 dark:border-slate-600 hover:border-indigo-500 hover:bg-indigo-500/10 text-transparent hover:text-indigo-400 cursor-pointer active:scale-90'
+            ? 'bg-zinc-900 dark:bg-zinc-100 border-transparent text-white dark:text-zinc-900 cursor-default' 
+            : 'border-zinc-300 dark:border-zinc-700 hover:border-indigo-600 dark:hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 text-transparent hover:text-indigo-600 dark:hover:text-indigo-400 active:scale-95'
         ]"
       >
-        <Check class="w-4 h-4 stroke-[3]" />
+        <Check class="w-3.5 h-3.5 stroke-[2.5]" />
       </button>
 
       <!-- Main Content -->
       <div class="flex-1 min-w-0">
-        <div class="flex items-center justify-between gap-2">
+        <div class="flex items-baseline justify-between gap-2">
           <h4 
             :class="[
-              'text-sm font-semibold tracking-tight transition-colors line-clamp-2',
+              'text-sm font-medium tracking-tight transition-colors',
               isCompleted 
-                ? 'line-through text-slate-400 dark:text-slate-500' 
-                : 'text-slate-900 dark:text-slate-100'
+                ? 'line-through text-zinc-400 dark:text-zinc-500' 
+                : 'text-zinc-900 dark:text-zinc-100'
             ]"
           >
             {{ task.title }}
           </h4>
 
-          <!-- Actions (Edit/Delete) -->
+          <!-- Edit & Delete buttons (discreet on hover) -->
           <div class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 shrink-0">
             <button
               @click="emit('edit', task)"
               title="Редактировать"
-              class="p-1 rounded-md text-slate-400 hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              class="p-1 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
             >
               <Edit3 class="w-3.5 h-3.5" />
             </button>
             <button
               @click="handleDelete"
               title="Удалить"
-              class="p-1 rounded-md text-slate-400 hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              class="p-1 rounded-md text-zinc-400 hover:text-rose-500 transition-colors"
             >
               <Trash2 class="w-3.5 h-3.5" />
             </button>
@@ -105,57 +102,34 @@ function handleDelete() {
         <p 
           v-if="task.description" 
           :class="[
-            'text-xs mt-1 line-clamp-2',
-            isCompleted ? 'text-slate-500 dark:text-slate-600' : 'text-slate-600 dark:text-slate-400'
+            'text-xs mt-1 leading-relaxed',
+            isCompleted ? 'text-zinc-400 dark:text-zinc-600' : 'text-zinc-500 dark:text-zinc-400'
           ]"
         >
           {{ task.description }}
         </p>
 
-        <!-- Footer Badges -->
-        <div class="flex flex-wrap items-center gap-2 mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800/60 text-xs">
+        <!-- Clean, calm metadata line (no noisy colored boxes) -->
+        <div class="flex items-center gap-2.5 mt-3 text-xs text-zinc-400 dark:text-zinc-500">
           <!-- Difficulty & Rewards -->
-          <span 
-            :class="[
-              'inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-medium border text-[11px]',
-              diffConfig.color
-            ]"
-          >
-            {{ diffConfig.label }}
-          </span>
+          <span>{{ diffConfig.label }}</span>
+          <span>·</span>
+          <span>+{{ diffConfig.xp }} XP</span>
+          <span>·</span>
+          <span>{{ diffConfig.gold }} 🪙</span>
 
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[11px] font-medium">
-            <Sparkles class="w-3 h-3" />
-            +{{ diffConfig.xp }} XP
-          </span>
+          <!-- Daily streak if active -->
+          <template v-if="task.type === 'daily' && task.streak > 0">
+            <span>·</span>
+            <span class="inline-flex items-center gap-1 text-orange-500 font-medium">
+              <Flame class="w-3 h-3 fill-orange-500 text-orange-500" />
+              {{ task.streak }} дн.
+            </span>
+          </template>
 
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[11px] font-medium">
-            <Coins class="w-3 h-3" />
-            +{{ diffConfig.gold }}
-          </span>
-
-          <!-- Daily Streak Badge -->
-          <span 
-            v-if="task.type === 'daily'"
-            :class="[
-              'inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold border',
-              task.streak > 0 
-                ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' 
-                : 'bg-slate-500/10 text-slate-400 border-slate-500/20'
-            ]"
-          >
-            <Flame :class="['w-3 h-3', task.streak > 0 ? 'text-orange-500 fill-orange-500' : 'text-slate-400']" />
-            {{ task.streak }} {{ task.streak === 1 ? 'день' : (task.streak >= 2 && task.streak <= 4 ? 'дня' : 'дней') }}
-          </span>
-
-          <!-- Status Pill -->
-          <span 
-            v-if="isCompleted" 
-            class="ml-auto inline-flex items-center gap-1 text-[11px] font-medium text-emerald-400"
-          >
-            <CheckCircle2 class="w-3.5 h-3.5" />
-            <span v-if="task.type === 'daily'">Выполнено</span>
-            <span v-else>Завершено</span>
+          <!-- Done badge -->
+          <span v-if="isCompleted" class="ml-auto text-zinc-400 dark:text-zinc-500 font-medium text-[11px]">
+            Выполнено
           </span>
         </div>
       </div>
