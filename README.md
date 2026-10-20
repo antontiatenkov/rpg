@@ -63,6 +63,19 @@ npm run build
 npm run preview
 ```
 
+### 5. Публикация на GitHub Pages
+
+#### Способ 1: Командой из терминала
+```bash
+npm run deploy
+```
+*Скрипт автоматически соберет проект, создаст `404.html` и `.nojekyll`, и опубликует содержимое `dist` в ветку `gh-pages`.*
+
+#### Способ 2: Автоматически через GitHub Actions
+В репозитории уже настроен workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Достаточно сделать push в ветку `main` или `master`, и GitHub автоматически опубликует сайт.
+
+В настройках репозитория на GitHub (**Settings → Pages**) выберите источник **Deploy from a branch** → ветка `gh-pages` (для Способа 1) или **GitHub Actions** (для Способа 2).
+
 ---
 
 ## 🛠️ Стек технологий
