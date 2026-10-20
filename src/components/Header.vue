@@ -17,9 +17,7 @@ function toggleTheme() {
       <div class="flex items-center justify-between gap-4">
         <!-- Logo & Title -->
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 flex items-center justify-center font-bold text-sm shrink-0">
-            RPG
-          </div>
+          <img src="/favicon.svg" alt="RPG" class="size-12">
           <div>
             <h1 class="text-base sm:text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-100 leading-tight">
               Reach Personal Goals

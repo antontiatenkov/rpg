@@ -11,20 +11,39 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg'],
+      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: 'Reach Personal Goals',
         short_name: 'ReachGoals',
         description: 'Геймификация ежедневных задач, привычек и наград',
-        theme_color: '#4f46e5',
-        background_color: '#0f172a',
+        lang: 'ru',
+        theme_color: '#18181b',
+        background_color: '#09090b',
         display: 'standalone',
         icons: [
           {
-            src: '/favicon.svg',
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
+          },
+          {
+            src: 'favicon.svg',
             sizes: 'any',
             type: 'image/svg+xml',
-            purpose: 'any maskable'
+            purpose: 'any'
           }
         ]
       }
