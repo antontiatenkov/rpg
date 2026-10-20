@@ -1,22 +1,6 @@
 <script setup lang="ts">
 import { useGameStore } from '../stores/gameStore'
-import { 
-  CheckSquare, 
-  Gift, 
-  BarChart2, 
-  Settings, 
-  Moon, 
-  Sun, 
-  Coins
-} from '@lucide/vue'
-
-defineProps<{
-  activeTab: 'tasks' | 'rewards' | 'stats' | 'settings'
-}>()
-
-const emit = defineEmits<{
-  (e: 'update:activeTab', tab: 'tasks' | 'rewards' | 'stats' | 'settings'): void
-}>()
+import { Moon, Sun, Coins } from '@lucide/vue'
 
 const store = useGameStore()
 
@@ -61,7 +45,7 @@ function toggleTheme() {
           <button
             @click="toggleTheme"
             title="Переключить тему оформления"
-            class="p-2 rounded-xl text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 transition-colors"
+            class="p-2 rounded-xl text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 transition-colors cursor-pointer"
           >
             <Sun v-if="store.settings.theme === 'dark'" class="w-4 h-4 text-amber-400" />
             <Moon v-else class="w-4 h-4 text-zinc-600" />
@@ -82,61 +66,6 @@ function toggleTheme() {
           ></div>
         </div>
       </div>
-
-      <!-- Navigation Tabs with plenty of air -->
-      <nav class="flex items-center gap-1 sm:gap-2 mt-4 pt-1 overflow-x-auto no-scrollbar">
-        <button
-          @click="emit('update:activeTab', 'tasks')"
-          :class="[
-            'flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap cursor-pointer',
-            activeTab === 'tasks' 
-              ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm' 
-              : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
-          ]"
-        >
-          <CheckSquare class="w-4 h-4" />
-          Задачи
-        </button>
-
-        <button
-          @click="emit('update:activeTab', 'rewards')"
-          :class="[
-            'flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap cursor-pointer',
-            activeTab === 'rewards' 
-              ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm' 
-              : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
-          ]"
-        >
-          <Gift class="w-4 h-4" />
-          Награды
-        </button>
-
-        <button
-          @click="emit('update:activeTab', 'stats')"
-          :class="[
-            'flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap cursor-pointer',
-            activeTab === 'stats' 
-              ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm' 
-              : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
-          ]"
-        >
-          <BarChart2 class="w-4 h-4" />
-          Статистика
-        </button>
-
-        <button
-          @click="emit('update:activeTab', 'settings')"
-          :class="[
-            'flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap cursor-pointer',
-            activeTab === 'settings' 
-              ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm' 
-              : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
-          ]"
-        >
-          <Settings class="w-4 h-4" />
-          Настройки
-        </button>
-      </nav>
     </div>
   </header>
 </template>
